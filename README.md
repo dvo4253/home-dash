@@ -1,3 +1,3 @@
-# api-async
+# Home-Dash
 
-Basic example of client/server interaction for training.
+initial client (react ssr) & api (express) to use for 
