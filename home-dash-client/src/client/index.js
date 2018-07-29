@@ -9,10 +9,6 @@ import Entry from './entry';
 const renderEntry = (Component) => {
   const store = createStore(window.__STATE__, makeFetch, makePut);
 
-  if (window.newrelic) {
-    window.newrelic.setCustomAttribute('nmUniqueId', window.__STATE__.meta.nmUniqueId);
-  }
-
   render(
     <AppContainer>
       <Component store={store} />
