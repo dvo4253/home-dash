@@ -1,3 +1,5 @@
-dist
-node_modules
-src/views/layouts/main.handlebars
+node_modules/
+dist/
+
+#Mac
+.DS_Store

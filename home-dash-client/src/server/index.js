@@ -1,32 +1,13 @@
-/* eslint no-console: "off" */
-import path from 'path';
-import express from 'express';
-import exphbs from 'express-handlebars';
+import http from 'http';
+import app from './app';
 
-const app = express();
-
-const hbs = exphbs.create({
-  defaultLayout: 'main',
-  layoutsDir: 'src/views/layouts',
-  partialsDir: [
-    'src/shared/templates/',
-    'src/views/partials/'
-  ]
-});
-console.log(path.join(`${__dirname}/../dist`));
-app.use('/dist', express.static(path.join(`${__dirname}/../dist`)));
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views'));
-app.set('layouts', path.join(__dirname, 'layouts'));
-
-app.get('/', (req, res) => {
-  const { id } = req.params;
-  res.render('home', {
-    title: `${id}`
-  });
+const httpServer = http.createServer(app).listen(8000, () => {
+	console.info(`app is listening at localhost: ${8000}`);
 });
 
-app.listen(3000, () => {
-  console.log('express-handlebars example server listening on: 3000');
+process.on('SIGTERM', () => {
+	httpServer.close(() => {
+		console.info('SIGTERM issued...app is shutting down');
+		process.exit(0);
+	});
 });
