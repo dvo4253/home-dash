@@ -1,18 +1,25 @@
 /* eslint-disable global-require */
-
+/* eslint-disable no-underscore-dangle */
+import { AppContainer } from 'react-hot-loader';
 import React from 'react';
-import ReactDOM from 'react-dom';
-// import { Provider } from 'react-redux';
+import { hydrate, render } from 'react-dom';
 import App from './App';
+import appUtils from '../util';
 
-const render = (Component) => {
-	ReactDOM.hydrate(
-		<Component />,
+const { createStore, makeFetch, makePost } = appUtils;
+
+const renderEntry = (Component) => {
+	const store = createStore(window.__STATE__, { makeFetch, makePost });
+
+	hydrate(
+		<AppContainer>
+			<Component store={store} />
+		</AppContainer>,
 		document.getElementById('app'),
 	);
 };
 
-render(App);
+renderEntry(App);
 
 /**
 * This script provides hot module reloading in development mode.
