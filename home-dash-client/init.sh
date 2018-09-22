@@ -1,4 +1,4 @@
-. ~/.nvm/nvm.sh
+. $(brew --prefix nvm)/nvm.sh
 nvm use
 export NODE_ENV=development
 export BABEL_ENV=development

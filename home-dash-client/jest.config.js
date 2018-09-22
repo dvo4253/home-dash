@@ -6,6 +6,6 @@ module.exports = {
 		'!src/**/*.test.js',
 		'!src/**/mock/**/*',
 	],
-	setupTestFrameworkScriptFile: '<rootDir>/utils/testHelpers/setupTest.js',
-	setupFiles: ['<rootDir>/utils/testHelpers/setupConfig.js'],
+	setupTestFrameworkScriptFile: '<rootDir>/util/testHelpers/setupTest.js',
+	setupFiles: ['<rootDir>/util/testHelpers/setupConfig.js'],
 };
