@@ -4,15 +4,16 @@
   "description": "Home Dashboard Server",
   "scripts": {
     "babel-node": "babel-node ./src/index.js",
+    "build": "webpack --config webpack/webpack.server.babel.js",
     "build:server:dev": "webpack --config webpack/webpack.server.babel.js",
-    "dev": "npm run build:server:dev && npm run start",
+    "dev": "npm run build:server:dev && npm run dev:server",
     "dev:server": "nodemon src/index.js --exec babel-node",
     "start": "node ./dist/server/index.js",
     "start:dev": "wait-on ./dist/server && nodemon --watch ./dist/server",
     "start:inspect": "npm run lint && npm run build && nodemon --inspect --exec npm run babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --fix ./",
-    "init": "source init.sh",
+    "init": ". init.sh",
     "clean": "rm -rf node_modules && rm -rf dist",
     "clean:install": "npm run clean && npm install"
   },

@@ -1,0 +1,4 @@
+.vagrant
+coverage
+dist
+node_modules

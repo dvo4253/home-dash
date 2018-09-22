@@ -1,8 +1,11 @@
 import http from 'http';
 import app from './app';
 
-const httpServer = http.createServer(app).listen(8000, () => {
-  console.info(`app is listening at localhost: ${8000}`);
+const HTTP_PORT = process.env.HTTP_PORT || 8080;
+// const HTTPS_PORT = process.env.HTTPS_PORT || 8443;
+
+const httpServer = http.createServer(app).listen(HTTP_PORT, () => {
+  console.info(`app is listening at localhost: ${HTTP_PORT}`);
 });
 
 process.on('SIGTERM', () => {

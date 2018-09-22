@@ -2,7 +2,7 @@ import axios from 'axios';
 import querystring from 'querystring';
 
 // application/x-www-form-urlencoded
-const getToken = async (pincode) => {
+const getToken = async () => {
 
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -33,7 +33,28 @@ const getToken = async (pincode) => {
   }
 }
 
+const checkAuth = (req, res) => {
+  const {token} = req.body;
+
+  if (token) {
+    const options = {
+      "headers": {
+         "Authorization": "Bearer " + token
+      },
+      "followRedirect": true
+    }
+    axios.get('https://developer-api.nest.com', options)
+    .then(response => {
+      console.log(response)
+    })
+  }
+  else {
+    res.status(401).json({msg: 'Unauthorized'})
+  }
+
+}
 
 export default {
-  getToken
+  getToken,
+  checkAuth
 }

@@ -8,14 +8,14 @@ const apiRouter = express.Router();
 apiRouter.route('/').get(async (req, res) => {
   console.log("I'm in the Root Route");
 
-  let { token, pincode } = req.query;
+  let { token, pincode } = req.body;
   let data = {}
   try {
     if (!token && !pincode) {
       return res.sendStatus(400);
     }
     else if (!token) {
-      data = await auth.nestAuth.getToken(pincode);
+      data = await auth.nestAuth.getToken();
       token = data.access_token;
     }
 
@@ -25,7 +25,7 @@ apiRouter.route('/').get(async (req, res) => {
     // encrypted += cipher.final('hex');
 
 
-    //const nestData = await nestAPI.getNestData(token);
+    const nestData = await nestAPI.getNestData(token);
 
     return res.status(200).json({ token });
     //return res.status(200).json(nestData.devices.thermostats);
