@@ -1,6 +1,7 @@
 import merge from 'webpack-merge';
 import path from 'path';
 import webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import DiskPlugin from 'webpack-disk-plugin';
 import common from './webpack.common.babel';
 
@@ -20,10 +21,23 @@ const writeToDisk = new DiskPlugin({
 	],
 });
 
+const devPlugins = [
+	writeToDisk,
+	// new WriteAssetsWebpackPlugin({ force: true, extension: ['html'] }),
+	new webpack.NamedModulesPlugin(),
+	new webpack.HotModuleReplacementPlugin(),
+];
+
+// enable for the bundle analyzer to show in browser
+if (process.env.ANALYZE) {
+	devPlugins.push(new BundleAnalyzerPlugin());
+}
+
+
 const devConfig = merge({
 	entry: {
 		app: [
-			'react-hot-loader/patch',
+			'react-hot-loader/babel',
 			'webpack-dev-server/client?http://localhost:3000',
 			'webpack/hot/only-dev-server',
 			'./src/app/client.js',
@@ -39,16 +53,10 @@ const devConfig = merge({
 		compress: true,
 		port: 3000,
 	},
-	plugins: [
-		writeToDisk,
-		// new WriteAssetsWebpackPlugin({ force: true, extension: ['html'] }),
-		new webpack.NamedModulesPlugin(),
-		new webpack.HotModuleReplacementPlugin(),
-		// new BundleAnalyzerPlugin() // enable for the bundle analyzer to show in browser
-	],
 	output: {
 		publicPath: 'http://localhost:3000/dist/public',
 	},
+	plugins: devPlugins,
 	optimization: {
 		runtimeChunk: 'single',
 		splitChunks: {

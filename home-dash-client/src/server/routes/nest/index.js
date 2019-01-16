@@ -1,19 +1,14 @@
 import express from 'express';
-import axios from 'axios';
+import R from 'ramda';
+import { get, put } from '../util/axios';
+import getCookies from '../../../util/getCookies';
+import { NEST_TOKEN } from '../../../constants';
 
 const nestRouter = express.Router();
 
-export const getNestInfo = async (token) => {
-	let nestInfo = {};
-	const headers = { token };
-	console.log('TCL: getNestInfo -> headers', headers);
-	try {
-		nestInfo = await axios.get('http://localhost:9000/home-dash-api/nest/nestInfo', { headers });
-	} catch (error) {
-		console.log(error);
-	}
-
-	return nestInfo;
+export const getNestInfo = async (token = '') => {
+	const headers = { [NEST_TOKEN]: token };
+	return get('http://localhost:9000/home-dash-api/nest/nestInfo', { headers });
 };
 
 export const updateTargetTemp = async (token, deviceId, targetTemp) => {
@@ -24,63 +19,55 @@ export const updateTargetTemp = async (token, deviceId, targetTemp) => {
 	};
 	let result = {};
 
-	try {
-		const nestInfo = await axios.put('http://localhost:9000/home-dash-api/nest/updateTargetTemp', data, { headers });
-		result = nestInfo.data;
-	} catch (error) {
-		console.log(error);
-	}
+	const nestInfo = await put('http://localhost:9000/home-dash-api/nest/updateTargetTemp', data, { headers });
+	result = nestInfo.data;
 
 	return result;
 };
 
 const getNestInfoRoute = async (req, res) => {
-	const token = req.headers['nest-token'];
+	const cookies = getCookies(req);
+	const token = R.path([NEST_TOKEN], cookies);
 	let status = 400;
 	let nestInfo = {};
-	try {
-		if (token) {
-			nestInfo = await getNestInfo(token);
-			status = nestInfo ? 200 : 204;
-		} else {
-			status = 401;
-		}
-	} catch (error) {
-		status = 401;
-		nestInfo = { msg: 'Invalid Request' };
-		console.log(error);
+
+	nestInfo = await getNestInfo(token);
+	if (nestInfo.status === 302) {
+		return res.status(nestInfo.status).redirect(nestInfo.data.authUrl);
 	}
+
+	status = nestInfo ? 200 : 204;
 	return res.status(status).send(nestInfo);
 };
 
 const updateTargetTempRoute = async (req, res) => {
-	// console.log('TCL: updateTargetTempRoute -> req', req);
-	// console.log('TCL: updateTargetTempRoute -> req.body', req.body);
+	const cookies = getCookies(req);
+	const token = R.path([NEST_TOKEN], cookies);
 
-	const { token } = req.headers;
-	console.log('TCL: updateTargetTempRoute -> token', token);
 	const { deviceId, targetTemperatureF } = req.body;
 
 	let status = 400;
 	let nestInfo = {};
 
-	try {
-		if (token && deviceId && targetTemperatureF) {
-			nestInfo = await updateTargetTemp(token, deviceId, targetTemperatureF);
-			console.log('TCL: updateTargetTempRoute -> nestInfo', nestInfo);
-			status = nestInfo ? 200 : 204;
-		} else {
-			status = 401;
-		}
-	} catch (error) {
+	if (token && deviceId && targetTemperatureF) {
+		nestInfo = await updateTargetTemp(token, deviceId, targetTemperatureF);
+		status = nestInfo ? 200 : 204;
+	} else {
 		status = 401;
-		nestInfo = { msg: 'Invalid Request' };
-		console.log(error);
 	}
 	return res.status(status).send(nestInfo);
 };
 
+export const nestAuth = async (req, res) => {
+	const { code } = req.query;
+
+	const response = await get(`http://localhost:9000/home-dash-api/auth/nest/verifyAuth?code=${code}`); // eslint-disable-line camelcase
+	res.cookie(NEST_TOKEN, response.data.token, { httpOnly: true, secure: true, expire: response.data.expires_in });
+	res.redirect('https://localhost:8443');
+};
+
 nestRouter.route('/nestInfo').get(getNestInfoRoute);
 nestRouter.route('/updateTargetTemp').put(updateTargetTempRoute);
+nestRouter.route('/auth').get(nestAuth);
 
 export default nestRouter;

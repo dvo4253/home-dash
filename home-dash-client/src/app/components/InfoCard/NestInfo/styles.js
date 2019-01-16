@@ -23,6 +23,11 @@ export default {
 		fontSize: '2rem',
 		transform: 'rotate(90deg)',
 	},
+	transition: {
+		'-webkit-transition': 'background-color 1s linear',
+		/* For Safari 3.1 to 6.0 */
+		transition: 'background-color 1s linear',
+	},
 	outdoor: {
 		position: 'relative',
 		float: 'right',

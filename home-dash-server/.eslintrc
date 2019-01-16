@@ -1,0 +1,29 @@
+{
+	"extends": [
+		"airbnb"
+	],
+	"env": {
+		"es6": true,
+		"node": true,
+		"mocha": true,
+		"jest": true
+	},
+	"plugins": [
+		"babel",
+		"import"
+	],
+	"rules": {
+		"import/extensions": 0,
+		"import/prefer-default-export": 0,
+		"indent": [
+			2,
+			"tab"
+		],
+		"no-tabs": 0,
+		"max-len": [2, 180]
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  }
+}

@@ -29,4 +29,4 @@ const mapDispatchToProps = dispatch => ({
 	getLocationDispatch: position => dispatch(getLocation(position)),
 });
 
-export default connect(()=> ({}), mapDispatchToProps)(App);
+export default connect(() => ({}), mapDispatchToProps)(App);

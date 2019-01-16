@@ -13,25 +13,28 @@ import { propTypes } from './propTypes';
 import { nestActionCreators } from './ducks';
 
 // 	{data.ambient_temperature_f}&#x2109;
-
-export class NestInfo extends React.Component {
+const checkTargetTempUpdateSuccess = (target = {}) => target.successToggle;
+class NestInfo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleUpdateTargetTemp = this.handleUpdateTargetTemp.bind(this);
 	}
 
 	handleUpdateTargetTemp(ind) {
-		// console.log('TCL: NestInfo -> handleUpdateTargetTemp -> ind', ind);
-		const { incrementTargetTempDispatch, decrementTargetTempDispatch, updateNestStoreTargetTempDispatch, ui } = this.props;
-		if (ind === INCREMENT_TARGET_TEMP) incrementTargetTempDispatch(ui.targetTemp);
-		if (ind === DECREMENT_TARGET_TEMP) decrementTargetTempDispatch(ui.targetTemp);
+		const {
+			incrementTargetTempDispatch, decrementTargetTempDispatch, ui,
+		} = this.props;
 
-		updateNestStoreTargetTempDispatch(ui.targetTemp);
+		const { target } = ui;
+
+		if (ind === INCREMENT_TARGET_TEMP) incrementTargetTempDispatch(target.temperature);
+		if (ind === DECREMENT_TARGET_TEMP) decrementTargetTempDispatch(target.temperature);
 	}
 
 	render() {
-		console.log('Props: ', this.props);
 		const { classes, data, ui } = this.props;
+		const targetSuccessClass = checkTargetTempUpdateSuccess(ui.target) ? 'success' : classes.transition;
+
 
 		return (
 			<InfoCard>
@@ -57,9 +60,9 @@ export class NestInfo extends React.Component {
 									</Button>
 								</CardActions>
 							</Grid>
-							<Grid item xs={4}>
+							<Grid item xs={4} className={`${classes.target} ${targetSuccessClass}`}>
 								<Typography className={classes.label} color="textSecondary" variant="display1">Target</Typography>
-								<Typography className={classes.label} color="textSecondary" variant="headline">{ui.targetTemp}&#x2109;</Typography>
+								<Typography className={classes.label} color="textSecondary" variant="headline">{ui.target.temperature}&#x2109;</Typography>
 							</Grid>
 						</Grid>
 						<Grid container direction="row" justify="center">
@@ -84,16 +87,17 @@ export class NestInfo extends React.Component {
 NestInfo.propTypes = propTypes;
 
 const mapStateToProps = (state) => {
-	const { nest } = state.data;
-	const device1 = Object.keys(nest)[0];
+	const nestData = state.data.nest;
+	const nestUI = state.ui.nest;
+	const device1 = Object.keys(nestData)[0];
 
-	return { data: nest[device1], ui: { targetTemp: 75 } };
+	return { data: nestData[device1], ui: nestUI };
 };
 
 const mapDispatchToProps = dispatch => ({
 	incrementTargetTempDispatch: targetTemp => dispatch(nestActionCreators.incrementTargetTemp(targetTemp)),
 	decrementTargetTempDispatch: targetTemp => dispatch(nestActionCreators.decrementTargetTemp(targetTemp)),
-	updateNestStoreTargetTempDispatch: targetTemp => dispatch(nestActionCreators.updateNestStoreTargetTemp(targetTemp)),
+	// updateNestStoreTargetTempDispatch: targetTemp => dispatch(nestActionCreators.updateNestStoreTargetTemp(targetTemp)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NestInfo));

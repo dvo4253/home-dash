@@ -3,6 +3,7 @@ dist/
 coverage/
 public_keys/
 .vagrant
+docker/ssl/
 
 #Mac
 .DS_Store

@@ -1,5 +1,4 @@
 import { getNestInfo } from '../nest';
-// import initialAppState from '../../../util/initialAppState';
 
 export default async (authInfo = {}) => {
 	let nestInfo = {};
@@ -12,20 +11,51 @@ export default async (authInfo = {}) => {
 	};
 
 	const { nestToken } = authInfo;
+	let res = {
+		initialState,
+	};
 
 	try {
 		nestInfo = await getNestInfo(nestToken);
 
-		initialState = {
-			...initialState,
-			data: {
-				...initialState.data,
-				nest: nestInfo.data,
-			},
-		};
+		if (nestInfo.status === 200) {
+			const devices = Object.keys(nestInfo.data);
+			initialState = {
+				...initialState,
+				ui: {
+					nest: {
+						target: {
+							temperature: nestInfo.data[devices[0]].target_temperature_f,
+							scale: 'f',
+						},
+					},
+				},
+				data: {
+					...initialState.data,
+					nest: nestInfo.data,
+				},
+			};
+
+			res = {
+				...res,
+				initialState,
+			};
+		}
+
+		if (nestInfo.status === 302) {
+			res = {
+				...res,
+				data: nestInfo.data,
+			};
+		}
 	} catch (error) {
 		console.log(error);
 	}
 
-	return initialState;
+	res = {
+		...res,
+		status: nestInfo.status,
+	};
+
+	return res;
 };

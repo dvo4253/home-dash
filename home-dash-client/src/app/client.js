@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import { AppContainer } from 'react-hot-loader';
 import React from 'react';
+
 import { hydrate, render } from 'react-dom';
 import App from './components/App';
 import appUtils from '../util';

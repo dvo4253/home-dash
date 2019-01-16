@@ -1,7 +1,3 @@
-import { from } from 'rxjs';
-import axios from 'axios';
-
-// store = Array ['deviceId1': {...}, 'deviceId2': {...}]
 export const getDeviceId = (store, index) => {
 	// console.log('TCL: getDeviceId -> store', store);
 	if (store && index >= 0) {
@@ -28,5 +24,3 @@ export const getCurrentTargetTemp = (store) => {
 
 	return result;
 };
-
-export const put = (url, body, options) => from(new Promise(resolve => resolve(axios.put(url, body, options))));

@@ -5,5 +5,5 @@ const {
 } = PropTypes;
 
 export const propTypes = {
-	userPosition: shape({ latitude: number, longitude: number }).isRequired,
+	userPosition: shape({ latitude: number, longitude: number }),
 };

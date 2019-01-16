@@ -7,4 +7,5 @@ html(lang='en')
 		script.
 			window.__PRELOADED_STATE__ = !{JSON.stringify(__PRELOADED_STATE__).replace(/\\"/g, '"')};
 	body
+		input(type="hidden" name="_csrf" value=csrfToken)
 		div#app !{jsxString}
