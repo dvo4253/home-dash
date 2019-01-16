@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
-
-import { pingReducer } from '../../components/ButtonWrapper/ducks';
+// import initialAppState from '../../../util/initialAppState';
+import { metaReducer } from '../../components/App/ducks';
+import { nestReducers } from '../../components/InfoCard/NestInfo/ducks';
 
 const rootReducer = combineReducers({
-	ui: pingReducer,
-	data: (state = {}) => state,
+	meta: metaReducer,
+	ui: combineReducers({
+		nest: nestReducers.nestInfoReducerUI,
+	}),
+	data: combineReducers({
+		nest: nestReducers.nestInfoReducerData,
+	}),
 });
 
 export default rootReducer;

@@ -13,12 +13,6 @@ const extractSass = new ExtractTextPlugin({
 });
 
 module.exports = {
-	entry: {
-		app: [
-			'./src/app/client.js',
-			'./src/app/styles/entry.scss',
-		],
-	},
 	output: {
 		filename: '[name].[hash].js',
 		path: path.resolve(fileRoot, 'dist/public'),
@@ -51,15 +45,15 @@ module.exports = {
 			path: path.join(fileRoot, '/dist/public'),
 		}),
 		extractSass,
+
 		new HtmlWebpackPlugin({
 			filename: 'output.pug',
 			alwaysWriteToDisk: true,
 			template: 'src/server/template/index.pug',
 			inject: 'body',
 		}),
-		new HtmlWebpackPlugin(),
-		new HtmlWebpackHarddiskPlugin(),
 		new HtmlWebpackPugPlugin(),
+		new HtmlWebpackHarddiskPlugin(),
 		new CleanWebpackPlugin([path.join(fileRoot, 'dist/public')], {
 			root: path.join(__dirname, '../'),
 			verbose: true,

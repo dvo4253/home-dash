@@ -1,20 +1,31 @@
 import express from 'express';
 import React from 'react';
 import reactDomServer from 'react-dom/server';
-import App from '../../app/App';
+import App from '../../app/components/App';
 import appUtils from '../../util';
+import { NEST_TOKEN } from '../../constants';
 import { createInitialState } from './util';
 
 const { createStore, makeFetch, makePost } = appUtils;
 
 const viewRouter = express.Router();
 
-viewRouter.route('/').get((req, res) => {
-	const initialState = createInitialState();
+viewRouter.route('/').get(async (req, res) => {
+	const nestToken = req.cookies[NEST_TOKEN];
+	const { status, data, initialState } = await createInitialState({ nestToken });
 
-	const store = createStore(initialState, { makeFetch, makePost });
-	const jsxString = reactDomServer.renderToString(<App store={store} />);
-	res.render('output', { jsxString });
+	if (status === 302) {
+		return res.status(status).redirect(data.redirectUrl);
+	}
+
+	if (status === 200) {
+		const store = createStore(initialState, { makeFetch, makePost });
+		const jsxString = reactDomServer.renderToString(<App store={store} />);
+
+		return res.render('output', { csrfToken: req.csrfToken(), jsxString, __PRELOADED_STATE__: initialState });
+	}
+
+	return res.status(404).send();
 });
 
 export default viewRouter;

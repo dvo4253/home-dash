@@ -1,7 +1,9 @@
 {
 	"extends": [
-		"airbnb"
+		"airbnb",
+		"plugin:react/recommended"
 	],
+	"parser": "babel-eslint",
 	"env": {
 		"es6": true,
 		"browser": true,
@@ -27,9 +29,11 @@
 			"tab"
 		],
 		"react/jsx-filename-extension": 0,
-		"react/jsx-one-expression-per-line": 0
+		"react/jsx-one-expression-per-line": 0,
+		"max-len": [2, 180]
 	},
 	"parserOptions": {
+		"ecmaVersion": 2018,
 		"ecmaFeatures": {
 			"jsx": true
 		}

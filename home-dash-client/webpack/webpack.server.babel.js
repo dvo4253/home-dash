@@ -10,7 +10,7 @@ const serverPack = {
 	stats: 'minimal',
 	target: 'node',
 	entry: './src/server/index.js',
-	devtool: 'source-map',
+	devtool: 'eval-source-map',
 	output: {
 		path: path.join(fileRoot, '/dist/server'),
 		filename: 'index.js',

@@ -1,5 +1,8 @@
-import nestAuth from './nest-api';
+import express from 'express';
+import nestAuthRoutes from './nest-api';
 
-export default {
-  nestAuth
-}
+const apiRouter = express.Router();
+
+apiRouter.use('/nest', nestAuthRoutes);
+
+export default apiRouter;

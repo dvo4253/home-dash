@@ -1,6 +1,7 @@
 import { combineEpics } from 'redux-observable';
-import { pingEpic } from '../../components/ButtonWrapper/ducks';
+import { metaEpics } from '../../components/App/ducks';
+import { nestEpics } from '../../components/InfoCard/NestInfo/ducks';
 
 export default combineEpics(
-	pingEpic,
+	metaEpics, nestEpics,
 );

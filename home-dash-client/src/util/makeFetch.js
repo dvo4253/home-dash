@@ -1,5 +1,5 @@
 /* global fetch */
-require('isomorphic-fetch');
+import axios from 'axios';
 
 export const checkStatus = (response) => {
 	if (!response.ok) { // status in the range 200-299 or not
@@ -10,7 +10,7 @@ export const checkStatus = (response) => {
 
 export const parseJSON = response => response.json();
 
-export default (url, options) => fetch(url, options)
+export default (url, options) => axios.get(url, options)
 	.then(checkStatus)
 	.then(parseJSON)
 	.catch((err) => {

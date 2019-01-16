@@ -1,5 +1,11 @@
 doctype html
-html
-  head
-  body
-    div#app !{jsxString}
+html(lang='en')
+	head
+		title Pug
+		link(href="https://fonts.googleapis.com/icon?family=Material+Icons",	rel="stylesheet")
+		link(href="https://fonts.googleapis.com/css?family=Roboto:300,400,500",	rel="stylesheet")
+		script.
+			window.__PRELOADED_STATE__ = !{JSON.stringify(__PRELOADED_STATE__).replace(/\\"/g, '"')};
+	body
+		input(type="hidden" name="_csrf" value=csrfToken)
+		div#app !{jsxString}

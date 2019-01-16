@@ -1,0 +1,19 @@
+FROM node:8.11.4
+
+ARG HTTP_PORT=$HTTP_PORT
+ARG HTTPS_PORT=$HTTPS_PORT
+
+ENV HTTP_PORT=$HTTP_PORT
+ENV HTTPS_PORT=$HTTPS_PORT
+
+COPY . /app
+
+WORKDIR /app
+
+RUN npm install
+RUN npm run build
+
+EXPOSE $HTTP_PORT
+EXPOSE $HTTPS_PORT
+
+CMD ["npm", "run", "start"]
