@@ -10,7 +10,6 @@ import appUtils from '../util';
 const { createStore, makeFetch, makePost } = appUtils;
 
 const renderEntry = (Component) => {
-	console.log('State: ', window.__PRELOADED_STATE__);
 	const store = createStore(window.__PRELOADED_STATE__, { makeFetch, makePost });
 
 	hydrate(
