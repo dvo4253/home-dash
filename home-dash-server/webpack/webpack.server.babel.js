@@ -1,6 +1,5 @@
 import path from 'path';
 import webpack from 'webpack';
-import CleanWebpackPlugin from 'clean-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 
 const fileRoot = process.cwd();
@@ -26,10 +25,6 @@ const serverPack = {
 		],
 	},
 	plugins: [
-		new CleanWebpackPlugin([path.join(fileRoot, 'dist/server')], {
-			root: path.join(__dirname, '../'),
-			verbose: false,
-		}),
 		new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
 	],
 };

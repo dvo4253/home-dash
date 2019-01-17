@@ -4,9 +4,9 @@ import { HEADER_PREFIX } from '../constants/headers';
 describe('Get Custom Headers', () => {
 	it('should return empty headers object if no headers', () => {
 		const req = { headers: {} };
-		const { config } = getHeaders(req, {}, () => {});
+		const headers = getHeaders(req, {}, () => {});
 
-		expect(config.headers).toEqual({});
+		expect(headers).toEqual({});
 	});
 
 	it('should return empty headers object for non-custom headers', () => {

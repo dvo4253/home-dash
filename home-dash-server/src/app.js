@@ -1,6 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
+// import '@babel/register';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import client, { register } from 'prom-client';
@@ -41,4 +42,4 @@ app.use(BASE_ROUTE, routes);
 // Place the express-winston errorLogger after the router.
 app.use(loggers.errorConsoleLogger);
 
-module.exports = app;
+export default app;
