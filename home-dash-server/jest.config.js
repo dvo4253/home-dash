@@ -1,5 +1,6 @@
 module.exports = {
 	verbose: true,
+	testRegex: '/src/.*\\.test\\.js$',
 	collectCoverageFrom: [
 		'src/**/*.js',
 		'!node_modules/**/*.js',
