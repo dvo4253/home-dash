@@ -17,3 +17,8 @@ Run in a docker container
 `sh docker/run.sh`
 
 - Runs the container with the appropriate ports exposed
+
+## ENVIRONMENT VARIBLES
+
+NEST_CLIENT_ID
+NEST_SECRET_ID

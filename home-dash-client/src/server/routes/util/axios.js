@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const getRedirectUrl = (res) => {
+	console.log('GETTING REDIRECT URL: ');
 	if (res.data.authUrl) {
 		return res.data.authUrl;
 	}
@@ -9,6 +10,7 @@ const getRedirectUrl = (res) => {
 };
 
 const handleError = (error) => {
+	console.log('ERROR: ', error);
 	const { response } = error;
 	let res = {
 		status: response.status,

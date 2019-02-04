@@ -1,16 +1,15 @@
 import path from 'path';
 import webpack from 'webpack';
-import CleanWebpackPlugin from 'clean-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 
 const fileRoot = process.cwd();
 
 const serverPack = {
-	mode: 'development',
+	mode: 'production',
 	stats: 'minimal',
 	target: 'node',
 	entry: './src/server/index.js',
-	devtool: 'eval-source-map',
+	devtool: 'source-map',
 	output: {
 		path: path.join(fileRoot, '/dist/server'),
 		filename: 'index.js',
@@ -26,10 +25,6 @@ const serverPack = {
 		],
 	},
 	plugins: [
-		new CleanWebpackPlugin([path.join(fileRoot, 'dist/server')], {
-			root: path.join(__dirname, '../'),
-			verbose: false,
-		}),
 		new webpack.BannerPlugin({ banner: 'require("source-map-support").install();', raw: true, entryOnly: false }),
 	],
 };

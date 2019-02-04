@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import DashboardMain from '../DashboardMain';
 import { getLocation } from './ducks';
 import propTypes from './propTypes';
@@ -11,14 +11,11 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { store } = this.props;
-
 		return (
-			<Provider store={store}>
-				<div>
-					<DashboardMain />
-				</div>
-			</Provider>
+			<div>
+				<DashboardMain />
+			</div>
+
 		);
 	}
 }

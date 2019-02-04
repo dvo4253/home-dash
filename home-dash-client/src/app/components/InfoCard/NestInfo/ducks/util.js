@@ -18,7 +18,8 @@ export const getCurrentTargetTemp = (store) => {
 	let result = Number.NaN;
 	if (nest) {
 		const device1 = Object.keys(nest)[0];
-		// console.log('getCurrentTargetTemp device1.target_temperature_f: ', nest[device1].target_temperature_f);
+		// console.log('getCurrentTargetTemp device1.
+		// target_temperature_f: ', nest[device1].target_temperature_f);
 		result = nest[device1].target_temperature_f;
 	}
 

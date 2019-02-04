@@ -4,6 +4,9 @@ coverage/
 public_keys/
 .vagrant
 docker/ssl/
-
+webpack/ssl
 #Mac
 .DS_Store
+**/ssl/**/*
+**/*.key
+**/*.crt

@@ -3,23 +3,24 @@ import R from 'ramda';
 import { get, put } from '../util/axios';
 import getCookies from '../../../util/getCookies';
 import { NEST_TOKEN } from '../../../constants';
+import DOMAINS from '../util/domains';
 
 const nestRouter = express.Router();
 
 export const getNestInfo = async (token = '') => {
 	const headers = { [NEST_TOKEN]: token };
-	return get('http://localhost:9000/home-dash-api/nest/nestInfo', { headers });
+	return get(`${DOMAINS.HOME_DASH_API}/nest/nestInfo`, { headers });
 };
 
 export const updateTargetTemp = async (token, deviceId, targetTemp) => {
-	const headers = { token };
+	const headers = { [NEST_TOKEN]: token };
 	const data = {
 		deviceId,
 		target_temperature_f: targetTemp,
 	};
 	let result = {};
 
-	const nestInfo = await put('http://localhost:9000/home-dash-api/nest/updateTargetTemp', data, { headers });
+	const nestInfo = await put(`${DOMAINS.HOME_DASH_API}/nest/updateTargetTemp`, data, { headers });
 	result = nestInfo.data;
 
 	return result;
@@ -43,7 +44,6 @@ const getNestInfoRoute = async (req, res) => {
 const updateTargetTempRoute = async (req, res) => {
 	const cookies = getCookies(req);
 	const token = R.path([NEST_TOKEN], cookies);
-
 	const { deviceId, targetTemperatureF } = req.body;
 
 	let status = 400;
@@ -61,9 +61,16 @@ const updateTargetTempRoute = async (req, res) => {
 export const nestAuth = async (req, res) => {
 	const { code } = req.query;
 
-	const response = await get(`http://localhost:9000/home-dash-api/auth/nest/verifyAuth?code=${code}`); // eslint-disable-line camelcase
-	res.cookie(NEST_TOKEN, response.data.token, { httpOnly: true, secure: true, expire: response.data.expires_in });
-	res.redirect('https://localhost:8443');
+	const response = await get(`${DOMAINS.HOME_DASH_API}/auth/nest/verifyAuth?code=${code}`); // eslint-disable-line camelcase
+	res.cookie(
+		NEST_TOKEN,
+		response.data.token, {
+			httpOnly: true,
+			secure: true,
+			expire: response.data.expires_in,
+		},
+	);
+	res.redirect(DOMAINS.HOME_DASH_DOMAIN);
 };
 
 nestRouter.route('/nestInfo').get(getNestInfoRoute);

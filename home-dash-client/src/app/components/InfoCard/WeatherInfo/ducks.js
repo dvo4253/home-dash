@@ -38,6 +38,7 @@
 // // epics
 // export const getLocationEpic = action$ => action$.pipe(ofType(GET_LOCATION),
 // 	switchMap(() => new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(
-// position => resolve({ type: GET_LOCATION_SUCCESS, payload: position.coords }), error => reject(error)))));
+// position => resolve({
+// type: GET_LOCATION_SUCCESS, payload: position.coords }), error => reject(error)))));
 
 // export const weatherInfoEpic = combineEpics(getLocationEpic);

@@ -1,8 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable no-underscore-dangle */
-import { AppContainer } from 'react-hot-loader';
 import React from 'react';
-
+import { Provider } from 'react-redux';
 import { hydrate, render } from 'react-dom';
 import App from './components/App';
 import appUtils from '../util';
@@ -13,9 +12,9 @@ const renderEntry = (Component) => {
 	const store = createStore(window.__PRELOADED_STATE__, { makeFetch, makePost });
 
 	hydrate(
-		<AppContainer>
-			<Component store={store} />
-		</AppContainer>,
+		<Provider store={store}>
+			<Component />
+		</Provider>,
 		document.getElementById('app'),
 	);
 };

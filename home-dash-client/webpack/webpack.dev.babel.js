@@ -1,75 +1,60 @@
-import merge from 'webpack-merge';
+import fs from 'fs';
 import path from 'path';
 import webpack from 'webpack';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import DiskPlugin from 'webpack-disk-plugin';
+import merge from 'webpack-merge';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import AssetsPlugin from 'assets-webpack-plugin';
+
 import common from './webpack.common.babel';
 
+const isDocker = fs.existsSync('/.dockerenv');
 const fileRoot = process.cwd();
-
-// Write out asset files to disk.
-const writeToDisk = new DiskPlugin({
-	output: {
-		path: path.join(fileRoot, '/dist/public'),
-	},
-	files: [
-		{ asset: 'assets.json' },
-		{ asset: /app.[a-f0-9]{20}\.js/ },
-		{ asset: /vendors.[a-f0-9]{20}\.js/ },
-		{ asset: /runtime.[a-f0-9]{20}\.js/ },
-		{ asset: /app.[a-f0-9]{20}\.css/ },
-	],
-});
+const { WEBPACK_DEV_SERVER_PORT, HOME_DASH_DOMAIN } = process.env;
+const publicPath = `${HOME_DASH_DOMAIN}:${WEBPACK_DEV_SERVER_PORT}`;
 
 const devPlugins = [
-	writeToDisk,
-	// new WriteAssetsWebpackPlugin({ force: true, extension: ['html'] }),
+	new AssetsPlugin({
+		filename: 'assets.json',
+		path: path.join(fileRoot, '/dist/public'),
+	}),
+	new MiniCssExtractPlugin({
+		filename: '[name].css',
+	}),
 	new webpack.NamedModulesPlugin(),
 	new webpack.HotModuleReplacementPlugin(),
 ];
-
-// enable for the bundle analyzer to show in browser
-if (process.env.ANALYZE) {
-	devPlugins.push(new BundleAnalyzerPlugin());
-}
-
+// eslint-disable-next-line no-unused-expressions, global-require, import/no-extraneous-dependencies
+process.env.BUNDLE_ANALYZER && devPlugins.push(new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)());
 
 const devConfig = merge({
+	mode: 'development',
+	devtool: 'eval-source-map', // source maps
 	entry: {
 		app: [
-			'react-hot-loader/babel',
-			'webpack-dev-server/client?http://localhost:3000',
+			`webpack-dev-server/client?${publicPath}`,
 			'webpack/hot/only-dev-server',
 			'./src/app/client.js',
-			'./src/app/styles/entry.scss',
 		],
+		styles: './src/app/styles/entry.scss',
 	},
-	mode: 'development',
-	// devtool: 'cheap-module-source-map',  // may speed up rebuild but no source maps
-	devtool: 'eval-source-map', // source maps
-	cache: true,
+	output: {
+		filename: '[name].js',
+		publicPath: `${publicPath}/dist/public`,
+	},
 	devServer: {
+		hot: true,
+		disableHostCheck: true,
+		https: {
+			key: fs.readFileSync(path.join(process.cwd(), 'ssl/dev.home.local.key')),
+			cert: fs.readFileSync(path.join(process.cwd(), 'ssl/dev.home.local.crt')),
+		},
 		contentBase: path.join(fileRoot, 'dist/public'),
 		compress: true,
 		port: 3000,
-	},
-	output: {
-		publicPath: 'http://localhost:3000/dist/public',
+		headers: { 'Access-Control-Allow-Origin': '*' },
+		host: isDocker ? '0.0.0.0' : 'localhost',
 	},
 	plugins: devPlugins,
-	optimization: {
-		runtimeChunk: 'single',
-		splitChunks: {
-			cacheGroups: {
-				vendors: {
-					test: /[\\/]node_modules[\\/]/,
-					name: 'vendors',
-					enforce: true,
-					chunks: 'all',
-				},
-			},
-		},
-	},
 }, common);
 
-module.exports = devConfig;
+export default devConfig;

@@ -1,5 +1,6 @@
 import express from 'express';
 import React from 'react';
+import { Provider } from 'react-redux';
 import reactDomServer from 'react-dom/server';
 import App from '../../app/components/App';
 import appUtils from '../../util';
@@ -20,9 +21,13 @@ viewRouter.route('/').get(async (req, res) => {
 
 	if (status === 200) {
 		const store = createStore(initialState, { makeFetch, makePost });
-		const jsxString = reactDomServer.renderToString(<App store={store} />);
+		const jsxString = reactDomServer.renderToString(
+			<Provider store={store}>
+				<App />
+			</Provider>,
+		);
 
-		return res.render('output', { csrfToken: req.csrfToken(), jsxString, __PRELOADED_STATE__: initialState });
+		return res.render('output', { /* csrfToken: req.csrfToken() , */jsxString, __PRELOADED_STATE__: initialState });
 	}
 
 	return res.status(404).send();
