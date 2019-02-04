@@ -95,9 +95,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-	incrementTargetTempDispatch: targetTemp => dispatch(nestActionCreators.incrementTargetTemp(targetTemp)),
-	decrementTargetTempDispatch: targetTemp => dispatch(nestActionCreators.decrementTargetTemp(targetTemp)),
-	// updateNestStoreTargetTempDispatch: targetTemp => dispatch(nestActionCreators.updateNestStoreTargetTemp(targetTemp)),
+	incrementTargetTempDispatch: targetTemp => dispatch(nestActionCreators
+		.incrementTargetTemp(targetTemp)),
+	decrementTargetTempDispatch: targetTemp => dispatch(nestActionCreators
+		.decrementTargetTemp(targetTemp)),
+	// updateNestStoreTargetTempDispatch: targetTemp => dispatch
+	// (nestActionCreators.updateNestStoreTargetTemp(targetTemp)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NestInfo));

@@ -17,4 +17,8 @@ const customCookiesReducer = R.curry((cookies, accum, key) => {
 	return result;
 });
 
-export default req => R.reduce(customCookiesReducer(req.cookies || {}), {}, Object.keys(req.cookies || {})); // eslint-disable-line no-return-assign;
+export default req => R.reduce(
+	customCookiesReducer(req.cookies || {}),
+	{},
+	Object.keys(req.cookies || {}),
+); // eslint-disable-line no-return-assign;

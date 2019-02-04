@@ -9,7 +9,9 @@ export default (initialState, asyncMethods) => {
 
 	const enhancer = compose(
 		applyMiddleware(...[epicMiddleware]),
-		IS_CLIENT && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f, // eslint-disable-line no-underscore-dangle
+		IS_CLIENT
+			&& window.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
+			? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f, // eslint-disable-line no-underscore-dangle
 	);
 	const store = createStore(rootReducer, initialState, enhancer);
 	epicMiddleware.run(rootEpic);

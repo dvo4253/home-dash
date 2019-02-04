@@ -2,7 +2,6 @@ import http from 'http';
 import https from 'https';
 import fs from 'fs';
 import path from 'path';
-import 'babel-polyfill';
 import app from './app';
 
 const HTTP_PORT = process.env.HTTP_PORT || 8080;
@@ -13,8 +12,8 @@ const httpServer = http.createServer(app).listen(HTTP_PORT, () => {
 });
 
 const httpsServer = https.createServer({
-	key: fs.readFileSync(path.join(process.cwd(), 'docker/ssl/dev.key')),
-	cert: fs.readFileSync(path.join(process.cwd(), 'docker/ssl/dev.crt')),
+	key: fs.readFileSync(path.join(process.cwd(), 'ssl/dev.home.local.key')),
+	cert: fs.readFileSync(path.join(process.cwd(), 'ssl/dev.home.local.crt')),
 }, app).listen(HTTPS_PORT, () => {
 	console.info(`app is listening at localhost: ${HTTPS_PORT}`);
 });

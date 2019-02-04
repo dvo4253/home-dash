@@ -11,6 +11,7 @@ const httpServer = http.createServer(app).listen(HTTP_PORT, () => {
 	console.info(`app is listening at localhost: ${HTTP_PORT}`);
 });
 
+console.log('SSL PATH: ', path.join(process.cwd(), 'docker/ssl/dev.key'));
 const httpsServer = https.createServer({
 	key: fs.readFileSync(path.join(process.cwd(), 'docker/ssl/dev.key')),
 	cert: fs.readFileSync(path.join(process.cwd(), 'docker/ssl/dev.crt')),

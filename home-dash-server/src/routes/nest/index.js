@@ -47,7 +47,7 @@ const getNestDataRoute = async (req, res) => {
 };
 
 const updateTargetTempRoute = async (req, res) => {
-	const { token } = req.headers;
+	const token = req.headers[NEST_TOKEN];
 	const { deviceId, target_temperature_f } = req.body; // eslint-disable-line camelcase
 
 	if (!token) return res.sendStatus(400);

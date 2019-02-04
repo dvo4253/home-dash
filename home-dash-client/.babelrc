@@ -1,17 +1,6 @@
 {
-  "presets": [["env", {
-		"targets": {
-			"browsers": [
-				">1%",
-				"last 4 versions",
-				"Firefox ESR",
-				"not ie < 9"
-			]
-		}
-	} ],
-		"react"
+	"presets": [
+		"@babel/preset-env",
+		"@babel/preset-react"
 	],
-  "plugins": [
-    "transform-object-rest-spread"
-  ]
 }
