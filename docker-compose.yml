@@ -15,7 +15,7 @@ services:
      - ./home-dash-client:/app:rw
      - client_node_modules:/app/node_modules
     environment:
-      HOME_DASH_API_ROUTE: http://home-dash-server:9000/home-dash-api
+      HOME_DASH_API_ROUTE: http://home-dash-server:8080/home-dash-api
       HOME_DASH_DOMAIN: https://dev.home.local
       HTTP_PORT: ${CLIENT_HTTP_PORT}
       HTTPS_PORT: ${CLIENT_HTTPS_PORT}
@@ -36,12 +36,23 @@ services:
     environment:
       NEST_CLIENT_ID: ${NEST_CLIENT_ID}
       NEST_SECRET_ID: ${NEST_SECRET_ID}
-      HTTP_PORT: 9000
-      HTTPS_PORT: 9443
+      HTTP_PORT: 8080
+      HTTPS_PORT: 8443
       HOME_DASH_NEST_REDIRECT_URL: ${HOME_DASH_NEST_REDIRECT_URL}
     networks:
       - home-dash
     command: ["npm", "run", "dev"]
+  # home-dash-db:
+  #   image: mongo:latest
+  #   hostname: home-dash-db
+  #   container_name: home-dash-db
+  #   environment:
+  #       MONGO_INITDB_ROOT_USERNAME: root
+  #       MONGO_INITDB_ROOT_PASSWORD: example
+  #   networks:
+  #     - home-dash
+  #   ports:
+  #     - 27017:27017
 volumes:
   # client_app:
   client_node_modules:

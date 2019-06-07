@@ -33,6 +33,7 @@ const getNestInfoRoute = async (req, res) => {
 	let nestInfo = {};
 
 	nestInfo = await getNestInfo(token);
+
 	if (nestInfo.status === 302) {
 		return res.status(nestInfo.status).redirect(nestInfo.data.authUrl);
 	}

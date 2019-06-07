@@ -1,11 +1,15 @@
-import R from 'ramda';
+import {
+	toPairs, compose, reduce, contains,
+} from 'ramda';
 import { HEADER_PREFIX } from '../constants/headers';
+
+const HEADER_LIST = ['x-original-uri'];
 
 const customHeaderReducer = (accum, [key, val]) => {
 	const headerMatch = new RegExp(`^${HEADER_PREFIX}`);
-	return headerMatch.test(key) ? { ...accum, [key]: val } : accum;
+	return (contains(key, HEADER_LIST) || headerMatch.test(key)) ? { ...accum, [key]: val } : accum;
 };
 
-const filterHeaders = R.compose(R.reduce(customHeaderReducer, {}), R.toPairs);
+const filterHeaders = compose(reduce(customHeaderReducer, {}), toPairs);
 
 export default req => filterHeaders(req.headers);

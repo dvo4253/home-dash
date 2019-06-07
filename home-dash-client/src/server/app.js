@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import * as loggers from './util/loggers';
 import router from './routes';
-// import { COOKIE_PREFIX } from '../constants';
+import { BASE_PATH } from '../constants';
 
 const app = express();
 // const csrfProtection = csrf({
@@ -26,7 +26,7 @@ app.use(helmet());
 app.set('view engine', 'pug');
 app.set('views', path.join(process.cwd(), '/dist/public'));
 
-app.use('/', express.static(path.join(process.cwd(), '/dist/public'), { maxAge: '365d' })); // todo: move assets folder to asset public and add base path
+app.use(BASE_PATH, express.static(path.join(process.cwd(), '/dist/public'), { maxAge: '365d' })); // todo: move assets folder to asset public and add base path
 // app.use(
 // 	cookieSession({
 // 		secret: 'testsecret',
@@ -42,7 +42,6 @@ app.use(loggers.infoConsoleLogger);
 
 // CSRF error handler
 app.use((err, req, res, next) => {
-
 	if (err.code !== 'EBADCSRFTOKEN') return next(err);
 
 	// handle CSRF token errors here
@@ -50,7 +49,7 @@ app.use((err, req, res, next) => {
 	return res.send('form tampered with');
 });
 
-app.use('/', router);
+app.use(BASE_PATH, router);
 
 // Place the express-winston errorLogger after the router.
 app.use(loggers.errorConsoleLogger);

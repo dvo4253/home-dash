@@ -11,6 +11,8 @@ import { checkTokens } from './util/authorize';
 import routes from './routes';
 import { BASE_ROUTE } from './constants';
 
+console.log('KUBE: ', process.env.KUBE_ENVIRONMENT);
+
 const app = express();
 app.use(helmet());
 const { collectDefaultMetrics } = client;
