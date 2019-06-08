@@ -21,7 +21,7 @@
     "lint": "eslint --fix ./",
     "init": "source init.sh",
     "clean": "rm -rf node_modules && rm -rf dist",
-    "clean:install": "npm run clean && npm install && npm outdated"
+    "clean:install": "npm run clean && rm -f package-lock.json && npm install && npm outdated"
   },
   "author": "",
   "license": "ISC",
@@ -96,7 +96,7 @@
     "nodemon": "1.19.1",
     "supertest": "4.0.2",
     "wait-on": "3.2.0",
-    "webpack-cli": "3.3.2",
-    "webpack-dev-server": "3.7.0"
+    "webpack-cli": "3.3.3",
+    "webpack-dev-server": "3.7.1"
   }
 }
