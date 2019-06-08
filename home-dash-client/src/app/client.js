@@ -1,5 +1,8 @@
 /* eslint-disable global-require */
 /* eslint-disable no-underscore-dangle */
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import React from 'react';
 import { Provider } from 'react-redux';
 import { hydrate, render } from 'react-dom';
