@@ -39,16 +39,22 @@ class NestInfo extends React.Component {
 		return (
 			<InfoCard>
 				<CardContent>
-					<Grid container direction="column" spacing={40}>
-						<Grid container className={classes.gridRow} direction="row" justify="center">
-							<Grid item xs={6}><Typography className={classes.label} align="center" color="textSecondary" variant="display3">NEST</Typography></Grid>
-						</Grid>
-						<Grid container className={classes.gridRow} direction="row" justify="center" spacing={40}>
-							<Grid item xs={4}>
-								<Typography className={classes.label} color="textSecondary" variant="display1">Mode</Typography>
-								<Typography className={classes.label} color="textSecondary" variant="headline">{data.hvac_mode}</Typography>
+					<Grid container spacing={1} direction="column">
+						<Grid container spacing={1} className={classes.gridRow} direction="row" justify="center">
+							<Grid className={classes.title} item xs={12}>
+								<Typography className={classes.label} align="center" color="textSecondary" variant="h1">NEST</Typography>
 							</Grid>
-							<Grid item xs={4}>
+						</Grid>
+						<Grid container spacing={1} className={classes.gridRow} direction="row" justify="center">
+							<Grid container direction="column" item xs={4}>
+								<Grid className={classes.label} item>
+									<Typography variant="h2" className={classes.label} color="textSecondary">Mode</Typography>
+								</Grid>
+								<Grid className={classes.label} item>
+									<Typography className={classes.label} color="textSecondary">{data.hvac_mode}</Typography>
+								</Grid>
+							</Grid>
+							<Grid container direction="column" item xs={4}>
 								<CardActions>
 									<Button className={classes.indoorTempButton} size="small" onClick={() => this.handleUpdateTargetTemp(INCREMENT_TARGET_TEMP)}>
 										<i className={[classes.indoorTempUp, 'material-icons'].join(' ')}>arrow_forward_ios</i>
@@ -60,22 +66,29 @@ class NestInfo extends React.Component {
 									</Button>
 								</CardActions>
 							</Grid>
-							<Grid item xs={4} className={`${classes.target} ${targetSuccessClass}`}>
-								<Typography className={classes.label} color="textSecondary" variant="display1">Target</Typography>
-								<Typography className={classes.label} color="textSecondary" variant="headline">{ui.target.temperature}&#x2109;</Typography>
+							<Grid container directon="column" item xs={4} className={`${classes.target} ${targetSuccessClass}`}>
+								<Grid className={classes.label} item>
+									<Typography variant="h2" className={classes.label} color="textSecondary">Target</Typography>
+								</Grid>
+								<Grid className={classes.label} item>
+									<Typography className={classes.label} color="textSecondary">{ui.target.temperature}&#x2109;</Typography>
+								</Grid>
 							</Grid>
 						</Grid>
-						<Grid container direction="row" justify="center">
-							<Grid item xs={6}>
-								<Typography className={classes.indoorTemp} color="textSecondary" variant="display4">{data.ambient_temperature_f}&#x2109;</Typography>
+						<Grid container direction="row" item xs={12} justify="center">
+							<Grid container direction="column" item xs={6} justify="center">
+								<Grid className={classes.label} item>
+									<Typography className={classes.label} color="textSecondary">Humidity</Typography>
+								</Grid>
+								<Grid className={classes.label} item>
+									<Typography variant="h2" className={classes.humidity} color="textSecondary">{data.humidity}%</Typography>
+								</Grid>
+							</Grid>
+							<Grid className={classes.label} item xs={6}>
+								<Typography className={classes.indoorTemp} color="textSecondary">{data.ambient_temperature_f}&#x2109;</Typography>
 							</Grid>
 						</Grid>
-						<Grid container direction="row" justify="center">
-							<Grid item xs={6}>
-								<Typography align="center" color="textSecondary" variant="headline">Humidity</Typography>
-							</Grid>
-						</Grid>
-						<Typography className={classes.label} color="textSecondary">{data.humidity}%</Typography>
+
 					</Grid>
 
 				</CardContent>

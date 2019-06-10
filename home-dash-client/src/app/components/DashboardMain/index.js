@@ -18,7 +18,7 @@ const DashboardMain = (props) => {
 	const { classes } = props;
 	return (
 		<div className={classes.wrapper}>
-			<Grid container justify="center" className={classes.root} spacing={40}>
+			<Grid container justify="center" className={classes.root} spacing={1}>
 				<NestInfo />
 				<WeatherInfo />
 			</Grid>

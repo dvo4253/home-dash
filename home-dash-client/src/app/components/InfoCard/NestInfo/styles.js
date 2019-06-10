@@ -2,6 +2,10 @@ export default {
 	gridRow: {
 		padding: '2vh',
 	},
+	title: {
+		textSize: '3rem',
+		textAlign: 'center',
+	},
 	indoor: {
 		position: 'relative',
 		float: 'left',
@@ -10,6 +14,7 @@ export default {
 		display: 'inline-block',
 		margin: '0 2px',
 		transform: 'scale(0.8)',
+		fontSize: '5rem',
 	},
 	indoorTempUp: {
 		fontSize: '2rem',
@@ -43,5 +48,6 @@ export default {
 	},
 	humidity: {
 		marginBottom: 12,
+		fontSize: '2rem',
 	},
 };
