@@ -1,3 +1,7 @@
+import '@babel/register';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import http from 'http';
 import https from 'https';
 import fs from 'fs';

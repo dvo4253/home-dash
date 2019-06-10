@@ -36,7 +36,7 @@ export const updateNestTargetTemp = (action$, store) => action$
 
 			return putData;
 		}),
-		switchMap(putData => axios.put('/nest/updateTargetTemp', putData, {}).then(response => response.data)),
+		switchMap(putData => axios.put('/home-dash/nest/updateTargetTemp', putData, {}).then(response => response.data)),
 		mergeMap((response) => {
 			updateNestStoreTargetTemp(response);
 			return [

@@ -54,4 +54,4 @@ app.use(BASE_PATH, router);
 // Place the express-winston errorLogger after the router.
 app.use(loggers.errorConsoleLogger);
 
-module.exports = app;
+export default app;

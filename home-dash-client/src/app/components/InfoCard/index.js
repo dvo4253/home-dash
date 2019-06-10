@@ -9,7 +9,7 @@ import styles from './styles';
 function InfoCard(props) {
 	const { children, classes } = props;
 	return (
-		<Grid container item xs={4} spacing={40}>
+		<Grid container item xs={4} spacing={1}>
 			<Card className={classes.card}>
 				{ children }
 			</Card>
