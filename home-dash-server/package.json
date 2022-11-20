@@ -51,7 +51,7 @@
     "eslint-plugin-node": "9.1.0",
     "eslint-plugin-promise": "4.1.1",
     "jest": "24.8.0",
-    "nodemon": "1.19.1",
+    "nodemon": "2.0.17",
     "webpack-cli": "3.3.3",
     "webpack-dev-server": "3.7.1"
   }
