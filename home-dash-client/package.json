@@ -26,11 +26,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "7.4.5",
-    "@babel/preset-env": "7.4.5",
-    "@babel/preset-react": "7.0.0",
-    "@babel/register": "7.4.4",
-    "@babel/runtime": "7.4.5",
+    "@babel/core": "7.25.9",
+    "@babel/preset-env": "7.25.9",
+    "@babel/preset-react": "7.25.9",
+    "@babel/register": "7.25.9",
+    "@babel/runtime": "7.25.9",
     "@material-ui/core": "4.0.2",
     "@material-ui/icons": "4.0.1",
     "assets-webpack-plugin": "3.9.10",
@@ -91,7 +91,7 @@
     "winston": "3.2.1"
   },
   "devDependencies": {
-    "@babel/node": "7.4.5",
+    "@babel/node": "7.25.9",
     "css-loader": "2.1.1",
     "nodemon": "1.19.1",
     "supertest": "4.0.2",
